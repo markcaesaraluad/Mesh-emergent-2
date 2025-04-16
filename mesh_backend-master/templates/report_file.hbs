@@ -1,0 +1,235 @@
+<html>
+  <head>
+
+    <style type='text/css'>
+
+      figure table { border : 1px solid black; border-collapse: collapse; }
+      .table tr td{ border : 1px solid black; } .table tr td{ font-weight:
+      lighter; } body{ font-family: Arial, Helvetica, sans-serif; margin : 0;
+      padding : 0; } table { width: 100%; } table tr td { padding: 2px 4px 2px
+      4px; } .header {
+      {{! font-size: 20px; }}
+      } .no_border_table td{ border: none; font-weight: bold; font-size: 14px;
+      word-wrap: break-word; word-break: break-word; } .border_table td{ border:
+      1px solid black; font-size: 12px; word-wrap: break-word; word-break:
+      break-word; } .no_border_table{ padding: 0; width: 100%; } .border_table{
+      border-collapse: collapse; border: 1px solid black; padding: 0; width:
+      100%; } .border_table th{ text-align: start; padding: 2px; font-size:
+      14px; border: 1px solid black; } img { height: auto; width: 100%; }
+      .main_table, .main_table thead, .main_table tbody, .main_table tfoot {
+      border: none; } .page-header, .page-header-space { height: 80px; width:
+      100%; } .page-footer, .page-footer-space { height: 80px; width: 100%; }
+      .page-footer { position: fixed; bottom: 0; width: 100%; } .page-header {
+      position: fixed; top: 0mm; width: 100%; } .page { page-break-after: auto;
+      padding: 0px 50px 0px 50px; } tr.spaceUnder>td { padding-bottom: 1em; }
+      .content-body { padding: 50px; } @media print { table {
+      page-break-after:auto } th { page-break-inside:avoid;
+      page-break-after:auto } tr { page-break-inside:avoid;
+      page-break-after:auto } td { page-break-inside:avoid;
+      page-break-after:auto } thead {display: table-header-group;} tfoot
+      {display: table-footer-group;} }
+
+    </style>
+
+  </head>
+  {{! <script src='https://cdn.canvasjs.com/canvasjs.min.js'></script> }}
+  <body>
+
+    <div class='page-header'>
+
+    </div>
+
+    <div class='page-footer'>
+
+    </div>
+
+    <table class='main_table'>
+
+      <thead>
+        <tr>
+          <td>
+            <!--place holder for the fixed-position header-->
+            <div class='page-header-space'>
+
+            </div>
+          </td>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <!--*** CONTENT GOES HERE ***-->
+            <div class='page'>
+
+              <div class='content_body'>
+
+                <center>
+                  <p><b>MESH CONNECT COWORKING SPACE</b></p>
+                  <span>DOOR 2 JOMABO BLDG., SISON SUBD., MAGUGPO SOUTH, TAGUM
+                    CITY 8100</span><br />
+                  <span>Meshconnectcoworking.space | meshconnect.tgm@gmail.com |
+                    +639 26670 3691
+                  </span>
+
+                  <p
+                  >=======================================================================================</p>
+
+                  {{#if hasChartData}}
+                    <div class='row-graph' style='width: 100%; height: 350px; overflow: hidden'>
+                      <canvas id='myChart' height='200'></canvas>
+                    </div>
+                    {{/if}}
+                </center>
+
+                {{#ifCheckType type 1}}
+                  <center>
+                    <b class='header' style='font-size:18px'>SALES REPORT</b>
+                  </center>
+                {{/ifCheckType}}
+
+                {{#ifCheckType type 2}}
+                  <center>
+                    <b class='header' style='font-size:18px'>TIME MONITORING</b>
+                  </center>
+                {{/ifCheckType}}
+
+                {{#ifCheckType type 3}}
+                  <center>
+                    <b class='header' style='font-size:18px'>ANNUAL YEAR
+                      {{year_selected}}
+                      REPORT</b>
+                  </center>
+                {{/ifCheckType}}
+
+                <br /><br />
+
+                <br />
+
+                {{#ifCheckType type 1}}
+                  <table class='border_table'>
+                    <tr>
+                        <td>Date</td>
+                        <td>Name</td>
+                        <td>Package</td>
+                        <td style='width: 10%'>Price</td>
+                        <td style='width: 10%'>Amount Paid</td>
+                        <td>Receptionist</td>
+                        <td style='width: 10%'>Remarks</td>
+                    </tr>
+                    {{#each data}}
+                        <tr style='font-weight:lighter; font-size:10px'>
+                            <td>{{formatDate datetime_added 'short'}}</td>
+                            <td>{{c_name}}</td>
+                            <td>{{rate_name}}</td>
+                            <td style='font-family: Arial, Helvetica, sans-serif;width: 10%'>₱{{rate_rate}}</td>
+                            <td style='width: 10%'>{{payment}}</td>
+                            <td>{{fullname}}</td>
+                            <td style='width: 10%'>{{remarks}}</td>
+                        </tr>
+                    {{/each}}
+                    <tr>
+                        <td colspan="4" style="text-align: right;"><strong>Grand Total:</strong></td>
+                        <td colspan="3"><strong>{{grandTotal}}</strong></td>
+                    </tr>
+                </table>
+
+                {{/ifCheckType}}
+
+                {{#ifCheckType type 2}}
+                  <p>Receptionist: <b>{{username}}</b></p>
+                  <table class='border_table'>
+
+                    <tr>
+                      <th>Date</th>
+                      <th>Time In</th>
+                      <th>Time Out</th>
+                      <th style='width: 10%'># Hours</th>
+                      <th style='width: 10%'>Salary</th>
+                    </tr>
+                    {{#each data}}
+                      <tr style='font-weight:lighter; font-size:10px'>
+                        <td>{{formatDate datetime_added 'short'}}</td>
+                        <td>{{formatTime time_in 'short'}}</td>
+                        <td>{{formatTime time_out 'short'}}</td>
+                        <td>{{convertToHour total_hrs}}</td>
+                        <td>{{salary}}</td>
+                      </tr>
+                    {{/each}}
+                    <tr>
+                        <td colspan="4" style="text-align: right;"><strong>Total Salary:</strong></td>
+                        <td colspan="3"><strong>{{grandTotal}}</strong></td>
+                    </tr>
+                  </table>
+
+                {{/ifCheckType}}
+
+                {{#ifCheckType type 3}}
+                  <table class='border_table'>
+                    <tr>
+                      <th>Month</th>
+                      <th>Total</th>
+                    </tr>
+                    {{#each data}}
+                      <tr style='font-weight: lighter; font-size: 10px;'>
+                        <td>{{convertToMonthName month}}</td>
+                        <td>{{ payment}}</td>
+                      </tr>
+                    {{/each}}
+                    <tr>
+                      <td><strong>Grand Total</strong></td>
+                      <td><strong>{{grandTotal}}</strong></td>
+                    </tr>
+                  </table>
+                {{/ifCheckType}}
+
+                <p>Prepared by:</p>
+                <p>{{prepared_by}}</p>
+
+                {{!-- {{#ifCheckType isCampusWide 0}}
+    <div style="text-align:start;">
+          <span style="font-size: 14px; font-weight:bold; margin:auto">{{office_head}}</span><br>
+          <span style="font-size: 14px; font-weight:lighter; margin:auto">{{pos_office_head}}, {{office_name}}</span>
+    </div><br>
+    {{/ifCheckType}}   --}}
+
+              </div>
+
+            </div>
+
+          </td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td>
+            <!--place holder for the fixed-position footer-->
+            <div class='page-footer-space'>
+
+            </div>
+          </td>
+        </tr>
+        <input type='hidden' id='labels' value='{{labels}}' />
+        <input type='hidden' id='chartData' value='{{chartData}}' />
+      </tfoot>
+
+    </table>
+    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+    <script>
+      const ctx = document.getElementById("myChart"); var lbls =
+      document.getElementById("labels").value; var cdts =
+      document.getElementById("chartData").value; console.log("ctx: ", ctx);
+      const myChart = new Chart(ctx, { type: "line", data: {
+      labels:JSON.parse(lbls), datasets: [ { axis: "y", label: "", data:
+      JSON.parse(cdts), fill: false, barThickness: 6, backgroundColor: [
+      "rgb(244,67,54)", "rgb(255,152,0)", "rgb(255,235,59)", "rgb(76,175,80)",
+      "rgb(33,150,243)", "rgb(0,166,156)", "rgb(139,24,229)", "rgb(11,130,91)",
+      ], borderColor: [ "rgb(244,67,54)", "rgb(255,152,0)", "rgb(255,235,59)",
+      "rgb(76,175,80)", "rgb(33,150,243)", "rgb(0,166,156)", "rgb(139,24,229)",
+      "rgb(11,130,91)", ], }, ], }, options: { scales: { yAxes: [{ ticks: {
+      beginAtZero: true } }] } }, });
+    </script>
+
+  </body>
+</html>
