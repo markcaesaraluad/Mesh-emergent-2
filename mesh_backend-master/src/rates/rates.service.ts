@@ -108,7 +108,7 @@ async findItemByPackage(type : number, area_id : number){
       area_id : data.area_id,
       rate : data.rate,
       exceed : data.exceed,
-      rate_type: data.rate_type,
+      type: data.type,
       
     });
 
