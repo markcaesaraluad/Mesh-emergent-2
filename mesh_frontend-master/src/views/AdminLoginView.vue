@@ -120,18 +120,31 @@
 
         axios.post(process.env.VUE_APP_BASE_URL + '/auth/login', user_data)
             .then((res)=>{
+                console.log('Login response:', res.data);
                 
                 if(res.data.status == 302){
                 this.loadingViewShown = false;
                 this.email = "";
                 this.password = "";
+                
+                // Debug: Check user data before storing
+                console.log('User data to store:', res.data.user);
                 this.$store.commit('UPDATE_USER',res.data.user);
+                
+                // Debug: Check store state after commit
+                console.log('Store state after commit:', this.$store.state.user);
+                
                 this.$router.push('/admin_dashboard');
                 }
                 else if(res.data.status == 404){
                   this.loadingViewShown = false;
                   this.alertMsg = res.data.message;
                 }
+            })
+            .catch((error) => {
+                console.error('Login error:', error);
+                this.loadingViewShown = false;
+                this.alertMsg = 'Login failed. Please try again.';
             })
       }
       
