@@ -102,6 +102,21 @@ export default{
     },
     getAll() {
 
+      // Check if user exists in store
+      if (!this.$store.state.user) {
+        console.error('No user in store state, redirecting to login');
+        this.$router.push('/');
+        return;
+      }
+
+      // Check if user has ut_id
+      if (!this.$store.state.user.ut_id || !this.$store.state.user.ut_id.id) {
+        console.error('User ut_id not found:', this.$store.state.user);
+        return;
+      }
+
+      console.log('Getting menu for user type:', this.$store.state.user.ut_id.id);
+
       axios.get(process.env.VUE_APP_BASE_URL + '/user_types_menu/get_menu/' + this.$store.state.user.ut_id.id)
         .then((res) => {
 
@@ -143,19 +158,11 @@ export default{
 
             this.alldata = itemSorter(itemFilter(this.alldata));
 
-
-
-            // const flatten = (array) => array.flatMap(({id,ut_id,um_id,datetime_added,order_num,parent_id, position, children}) => [
-            // { id,ut_id,um_id,datetime_added,order_num,parent_id, position },
-            // ...flatten(children || []) 
-            // ])
-            // ;
-            // console.log(flatten);
-            // this.alldata = flatten(this.alldata);
-           
-
           }
 
+        })
+        .catch((error) => {
+          console.error('Error loading menu:', error);
         });
     },
     goToProfile() {
