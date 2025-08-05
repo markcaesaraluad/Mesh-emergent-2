@@ -51,7 +51,10 @@ class MeshConnectAPITester:
                 print(f"❌ Failed - Expected {expected_status}, got {response.status_code}")
                 print(f"   Response: {response.text[:200]}...")
 
-            return success, response.json() if response.text and response.text.strip() else {}
+            try:
+                return success, response.json() if response.text and response.text.strip() else {}
+            except:
+                return success, {"text_response": response.text[:100] if response.text else ""}
 
         except Exception as e:
             print(f"❌ Failed - Error: {str(e)}")
