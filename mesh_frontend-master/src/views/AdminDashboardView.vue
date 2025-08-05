@@ -600,15 +600,21 @@ export default{
 
               this.dateTime = moment(String(timestamp)).format('MMMM DD, YYYY');
 
-              // update the time every second
+              // update the time every second - fix language tag issue
     this.interval = setInterval(() => {
-      // Concise way to format time according to system locale.
-      // In my case this returns "3:48:00 am"
-      this.time = Intl.DateTimeFormat(navigator.language, {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-      }).format()
+      try {
+        // Use a safe locale or fallback to en-US
+        const locale = navigator.language && navigator.language.indexOf('@') === -1 ? navigator.language : 'en-US';
+        this.time = new Intl.DateTimeFormat(locale, {
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+        }).format(new Date());
+      } catch (error) {
+        // Fallback to simple time format if Intl fails
+        const now = new Date();
+        this.time = now.toLocaleTimeString('en-US');
+      }
     }, 1000)
 
     },
