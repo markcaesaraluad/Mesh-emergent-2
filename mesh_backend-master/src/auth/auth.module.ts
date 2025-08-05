@@ -10,8 +10,8 @@ import { AuthController } from './auth.controller';
 
 @Module({
   imports: [UserModule, TypeOrmModule.forFeature([UserEntity]), JwtModule.register({
-    secret: 'SECRET', //put in env vars
-    signOptions: { expiresIn: '60s' },
+    secret: process.env.JWT_SECRET || 'meshconnect_super_secret_jwt_key_2024',
+    signOptions: { expiresIn: process.env.JWT_EXPIRES_IN || '24h' },
   })],
   providers: [
     AuthService,
