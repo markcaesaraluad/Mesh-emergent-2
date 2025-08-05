@@ -5,14 +5,16 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // CORS configuration - update origin for production
+  // CORS configuration - update for development
   app.enableCors({
     allowedHeaders: 'Content-Type, Authorization',
     origin: [
+    'http://localhost:3000',
+    'http://localhost:8080',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:8080',
     'https://meshsystem.meshconnectcoworking.space', 
     'https://www.meshsystem.meshconnectcoworking.space',
-    'http://localhost:8080',
-    'http://192.168.1.4:8080/'
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
@@ -29,7 +31,7 @@ async function bootstrap() {
   }
 
   // Use environment variable for port
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 8001;
   await app.listen(port, '0.0.0.0');
   console.log(`Application is running on port ${port}`);
 }
