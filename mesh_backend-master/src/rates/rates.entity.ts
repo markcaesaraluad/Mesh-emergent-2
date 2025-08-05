@@ -18,9 +18,6 @@ export class RatesEntity {
     rate: number
 
     @Column()
-    rate_type: string
-
-    @Column()
     exceed: number
 
     @Column()
