@@ -85,31 +85,34 @@
           </div>
         </div>
 
-        <!-- Column 3: Wallet Transactions -->
+        <!-- Column 3: Pending Appointments/Bookings -->
         <div class="bg-white rounded-lg p-4 shadow">
           <div class="flex flex-col my-4 gap-2">
-            <span class="text-xl text-gray-800">Wallet Transactions</span>
+            <span class="text-xl text-gray-800">Pending Appointments</span>
 
             <div class="overflow-x-auto">
               <table class="w-full text-xs text-left text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                   <tr>
-                    <th scope="col" class="px-2 py-2 text-left">User</th>
-                    <th scope="col" class="px-2 py-2 text-left">Amount</th>
-                    <th scope="col" class="px-2 py-2 text-center">Status</th>
+                    <th scope="col" class="px-2 py-2 text-left">Customer</th>
+                    <th scope="col" class="px-2 py-2 text-left">Area</th>
+                    <th scope="col" class="px-2 py-2 text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-if="allwallettransactions.length == 0">
-                    <td colspan="3" class="py-5 px-2 text-center text-gray-500 text-xs">No transactions yet.</td>
+                  <tr v-if="allappointments.length == 0">
+                    <td colspan="3" class="py-5 px-2 text-center text-gray-500 text-xs">No pending appointments yet.</td>
                   </tr>
-                  <tr v-for="i in allwallettransactions.slice(0, 5)" v-bind:key="i.id" class="odd:bg-white even:bg-gray-50 border-b hover:bg-gray-100 cursor-pointer" @click="showWalletModal(i)">
+                  <tr v-for="i in allappointments.slice(0, 5)" v-bind:key="i.id" class="odd:bg-white even:bg-gray-50 border-b hover:bg-gray-100">
                     <td class="px-2 py-1 text-xs">{{changeFormatUser(i.user_id)}}</td>
-                    <td class="px-2 py-1 text-xs">{{changeMonetaryFormat(i.input_credit)}}</td>
+                    <td class="px-2 py-1 text-xs">{{i.area_id.description}}</td>
                     <td class="px-2 py-1 text-center">
-                      <span :class="changeStatusStyle(i.isApproved)" class="text-white px-2 py-1 rounded text-xs">
-                        {{ changeStatus(i.isApproved) }}
-                      </span>
+                      <button @click="approveAppointment(i.id)" class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs mr-1">
+                        Approve
+                      </button>
+                      <button @click="rejectAppointment(i.id)" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs">
+                        Reject
+                      </button>
                     </td>
                   </tr>
                 </tbody>
