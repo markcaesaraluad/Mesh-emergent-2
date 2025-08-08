@@ -214,6 +214,7 @@ export default{
       alldata : '',
       allpending : '',
       allsessiondata : '',
+      allappointments : '',
       allwallettransactions : '',
       total_myfiles : 0,
       total_trash : 0,
