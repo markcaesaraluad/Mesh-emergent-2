@@ -477,25 +477,24 @@ export default {
     },
   },
   mounted: function () {
-    // this.getDateTime();
-    // this.created();
-    // this.getNotifications();
+    // Check if user exists before accessing user properties
+    if (!this.$store.state.user) {
+      console.error('No user in store state, redirecting to login');
+      this.$router.push('/');
+      return;
+    }
+
     this.getUserInfo();
     this.socket.emit(
       "loadMyNotifs",
       { userID: this.$store.state.user.id },
       (response) => {
-        // console.log("RT response", response);
-
         this.allnotifications = response;
-
-        // this.playSound();
       }
     );
 
     this.socket.on(`myNotifs_${this.$store.state.user.id}`, (res) => {
       this.allnotifications.push(res.data);
-
       this.notifyAudio();
     });
   },
