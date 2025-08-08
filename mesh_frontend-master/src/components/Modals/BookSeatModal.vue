@@ -143,7 +143,8 @@
             }
         },
         components: {
-            VueTimepicker  
+            VueTimepicker,
+            SeatMap
         },
         methods: {
             changeMonetaryFormat(val){
