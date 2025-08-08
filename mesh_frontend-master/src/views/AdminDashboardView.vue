@@ -3,27 +3,9 @@
 
     <div>
 
-      <p class="text-2xl text-gray-800 mb-4">Daily Stats</p>
+      <!-- Daily Stats section removed as requested -->
 
-      <div class="flex flex-col sm:flex-row items-center gap-2">
-
-        <div class="flex-auto w-full sm:flex-none sm:w-1/4 flex items-center bg-white p-6 rounded-lg fadeInSlide shadow">
-          <img src="../assets/icon_sitting.png" class="flex-none h-20 w-auto"/>
-          <div class="flex-none flex flex-col px-8">
-            <span class="flex-none text-gray-800">Total Customers Occupied</span>
-            <span class="flex-none text-3xl font-bold text-gray-800">0</span>
-          </div>
-        </div>
-
-        <div class="flex-auto w-full sm:flex-none sm:w-1/4  flex items-center bg-white p-6 rounded-lg fadeInSlide shadow">
-          <img src="../assets/icon_visit.png" class="flex-none h-20 w-auto"/>
-          <div class="flex-none flex flex-col px-8">
-            <span class="flex-none text-gray-800">Total Customers Visited</span>
-            <span class="flex-none text-3xl font-bold text-gray-800">0</span>
-          </div>
-        </div>
-
-      </div>
+      <!-- Restructured layout: 3-column layout for Pending Accounts, Wallet Transactions, and Sessions -->
 
       <div>
         <div class="flex sm:flex-row flex-col items-center my-4">
