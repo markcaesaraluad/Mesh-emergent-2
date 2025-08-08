@@ -132,12 +132,19 @@
               </li>
             </ul>
           </div>
-          <div class="my-2 mx-4">
+          <div class="my-2 mx-4 space-y-2">
             <button
               class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
               @click="showAllNotif = true"
             >
               View all
+            </button>
+            <button
+              v-if="getUnreadNotifCnt > 0"
+              class="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700"
+              @click="markAllAsRead"
+            >
+              Mark All as Read ({{ getUnreadNotifCnt }})
             </button>
             <!-- <router-link
               to="/notifications"
