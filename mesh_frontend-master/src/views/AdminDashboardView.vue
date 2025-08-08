@@ -214,7 +214,7 @@ export default{
       allwallettransactions : '',
       total_myfiles : 0,
       total_trash : 0,
-      fullName : this.$store.state.user.fname + ' ' + this.$store.state.user.mname + ' ' + this.$store.state.user.lname,
+      fullName : this.$store.state.user ? (this.$store.state.user.fname + ' ' + (this.$store.state.user.mname || '') + ' ' + this.$store.state.user.lname) : '',
       dateTime : '',
       interval : null,
       time : null,
