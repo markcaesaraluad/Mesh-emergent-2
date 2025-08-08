@@ -7,166 +7,116 @@
 
       <!-- Restructured layout: 3-column layout for Pending Accounts, Wallet Transactions, and Sessions -->
 
-      <div>
-        <div class="flex sm:flex-row flex-col items-center my-4">
-          <span class="flex-auto text-2xl text-gray-800">On Going Customer Sessions</span>
-          <select v-model="search_type" class="flex-none mx-2 rounded-md" @change="getSessions(search_type,null)">
-            <option value="login">Logged In</option>
-            <option value="logout">Logged Out</option>
-            <option value="pause">Paused</option>
-            <option value="latest">Latest</option>
-            <option value="oldest">Oldest</option>
-          </select>
-          <button class="flex-none w-auto bg-gray-600 hover:bg-gray-700 rounded-lg px-24 py-2 cursor-pointer text-white text-center fadeInSlide" @click="showCustomerSessionModal" autofocus>
-            Scan ID
-        </button>
-        </div>
+      <!-- Restructured layout: 3-column layout for main sections -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 my-6">
+        
+        <!-- Column 1: On Going Customer Sessions -->
+        <div class="bg-white rounded-lg p-4 shadow">
+          <div class="flex sm:flex-row flex-col items-center my-4">
+            <span class="flex-auto text-xl text-gray-800 mb-2 sm:mb-0">Customer Sessions</span>
+            <select v-model="search_type" class="flex-none mx-2 rounded-md text-sm" @change="getSessions(search_type,null)">
+              <option value="latest" selected>Latest</option>
+              <option value="login">Logged In</option>
+              <option value="logout">Logged Out</option>
+              <option value="pause">Paused</option>
+              <option value="oldest">Oldest</option>
+            </select>
+          </div>
 
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" class="px-6 py-3 w-auto text-left">
-                  ID#
-                </th>
-                <th scope="col" class="px-6 py-3 w-auto text-left">
-                  Time Remaining
-                </th>
-                <th scope="col" class="px-6 py-3 w-48 text-center">
-                  Status
-                </th>
-                <th scope="col" class="py-3 text-center w-48">
-                  Date & Time
-                </th>
-              </tr>
-          </thead>
-          <tbody>
-    
-            <tr v-if="allsessiondata.length == 0">
-              <td colspan="7" class="py-5 px-5">
-                <!-- <img src="../assets/icon_empty_document.png" class="mx-auto h-24"/> -->
-                <p class="w-full text-center mt-4 text-gray-500 text-sm">There are no items yet.</p>
-              </td>
-            </tr>
-    
-              <tr v-for="i in allsessiondata" v-bind:key="i.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 hover:bg-gray-200">
-                    <td class="px-6 py-2 w-auto text-left">
-                      {{i.user_id.user_id}}
-                    </td>
-                    <td class="px-6 py-2 w-auto text-left">
-                      {{ getTimeRemaining(i.datetime_added) }}
-                    </td>
-                    <td class="px-6 py-2 w-48 text-center">
-                      <span :class="i.status == 1 ? 'bg-green-500' : 'bg-red-500'" class="text-white px-8 py-1 rounded-lg">
-                        {{i.status == 1 ? 'Logged In' : 'Logged Out'}}
-                      </span>
-                    </td>
-                    <td class="px-2 py-2 text-center w-48">
-                      {{getDateTimeFormat(i.datetime_added)}}
-                    </td>
-              </tr>
-              
-          </tbody>
-      </table>
-
-
-      </div>
-
-      <div>
-
-      <div class="flex flex-col my-4 gap-2">
-        <span class="flex-auto text-2xl text-gray-800">Pending Accounts</span>
-
-        <table class="min-w-full divide-y divide-gray-300 w-full">
-          <thead class="bg-white">
-          <tr class="text-white">
-              <th scope="col" class="py-4 px-4 text-gray-500 font-bold text-left text-sm sm:pl-4 w-auto">Name</th>
-              <th scope="col" class="py-4 px-4 text-gray-500 font-bold text-center text-sm w-1/4">Date & Time Added</th>
-              <th scope="col" class="py-4 px-4 text-gray-500 font-bold text-center text-sm w-16">Actions</th>
-          </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200 bg-white">
-
-            <tr v-if="allpending.length == 0">
-                  <td colspan="3" class="py-5 px-5">
-                    <!-- <img src="../assets/icon_empty_document.png" class="mx-auto h-24"/> -->
-                    <p class="w-full text-center mt-4 text-gray-500 text-md">There are no pending accounts yet.</p>
-                  </td>
-                </tr>
-
-          <tr v-for="i in allpending" v-bind:key="i.id" class="hover:bg-gray-200">
-
-            <td class="py-4 px-4 text-sm text-gray-500 sm:pl-6 w-auto">{{changeFormatUser(i)}}</td>
-            <td class="py-4 px-4 text-sm text-gray-500 sm:pl-6 w-1/4 text-center">{{getDateTimeFormat(i.datetime_added)}}</td>
-            <td class="py-4 px-4 text-center w-16">
-                <img src="../assets/action_icon_edit.png" @click="showPendingModal(i.id, 'edit')" class="h-4 w-auto cursor-pointer mx-auto">
-            </td>
-          </tr>
-
-          </tbody>
-      </table>
-
-      </div>
-
-      </div>
-
-      <div>
-
-        <div class="flex flex-col my-4 gap-2">
-          <span class="flex-auto text-2xl text-gray-800">Wallet Transactions</span>
-
-          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead class="text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left text-gray-500">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                   <tr>
-                    <th scope="col" class="px-6 py-3 w-auto text-left">
-                      Credit amount
-                    </th>
-                    <th scope="col" class="px-6 py-3 w-40 text-left">
-                      Credit amount
-                    </th>
-                    <th scope="col" class="px-6 py-3 w-48 text-center">
-                      Status
-                    </th>
-                    <th scope="col" class="py-3 text-center w-1/4">
-                      Date & Time
-                    </th>
-                    <th scope="col" class="py-3 text-center w-20">
-                      
-                    </th>
+                    <th scope="col" class="px-2 py-2 text-left">ID#</th>
+                    <th scope="col" class="px-2 py-2 text-left">Time</th>
+                    <th scope="col" class="px-2 py-2 text-center">Status</th>
                   </tr>
               </thead>
               <tbody>
-        
-                <tr v-if="allwallettransactions.length == 0">
-                  <td colspan="7" class="py-5 px-5">
-                    <!-- <img src="../assets/icon_empty_document.png" class="mx-auto h-24"/> -->
-                    <p class="w-full text-center mt-4 text-gray-500 text-md">There are no transactions yet.</p>
+                <tr v-if="allsessiondata.length == 0">
+                  <td colspan="3" class="py-5 px-2 text-center text-gray-500 text-xs">No items yet.</td>
+                </tr>
+                <tr v-for="i in allsessiondata.slice(0, 5)" v-bind:key="i.id" class="odd:bg-white even:bg-gray-50 border-b hover:bg-gray-100">
+                  <td class="px-2 py-1 text-xs">{{i.user_id.user_id}}</td>
+                  <td class="px-2 py-1 text-xs">{{ getTimeRemaining(i.datetime_added) }}</td>
+                  <td class="px-2 py-1 text-center">
+                    <span :class="i.status == 1 ? 'bg-green-500' : 'bg-red-500'" class="text-white px-2 py-1 rounded text-xs">
+                      {{i.status == 1 ? 'In' : 'Out'}}
+                    </span>
                   </td>
                 </tr>
-        
-                  <tr v-for="i in allwallettransactions" v-bind:key="i.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 hover:bg-gray-200 text-sm cursor-pointer" @click="showWalletModal(i)">
-                        <td class="px-6 py-2 w-40 text-left">
-                          {{changeFormatUser(i.user_id)}}
-                        </td>
-                        <td class="px-6 py-2 w-40 text-left">
-                          {{changeMonetaryFormat(i.input_credit)}}
-                        </td>
-                        <td class="px-6 py-2 w-48 text-center">
-                          <span :class="changeStatusStyle(i.isApproved)" class="text-white px-8 py-1 rounded-lg">
-                            {{ changeStatus(i.isApproved) }}
-                          </span>
-                        </td>
-                        <td class="px-2 py-2 text-center w-1/4">
-                          {{getDateTimeFormat(i.datetime_added)}}
-                        </td>
-                        <td class="px-2 py-2 text-center w-20">
-                          <button @click="viewFile(i.file_attachment)" class="bg-blue-500 text-white text-xs px-4 py-2 rounded-md w-full">View</button>
-                        </td>
-                  </tr>
-                  
               </tbody>
-          </table>
+            </table>
+          </div>
+          
+          <button class="w-full bg-gray-600 hover:bg-gray-700 rounded-lg px-4 py-2 cursor-pointer text-white text-center text-sm mt-3" @click="showCustomerSessionModal">
+            Scan ID
+          </button>
         </div>
-        
+
+        <!-- Column 2: Pending Accounts -->
+        <div class="bg-white rounded-lg p-4 shadow">
+          <div class="flex flex-col my-4 gap-2">
+            <span class="text-xl text-gray-800">Pending Accounts</span>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs">
+                <thead class="bg-white">
+                  <tr>
+                    <th scope="col" class="py-2 px-2 text-gray-500 font-bold text-left text-xs">Name</th>
+                    <th scope="col" class="py-2 px-2 text-gray-500 font-bold text-center text-xs">Actions</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  <tr v-if="allpending.length == 0">
+                    <td colspan="2" class="py-5 px-2 text-center text-gray-500 text-xs">No pending accounts yet.</td>
+                  </tr>
+                  <tr v-for="i in allpending.slice(0, 5)" v-bind:key="i.id" class="hover:bg-gray-100">
+                    <td class="py-2 px-2 text-xs text-gray-500">{{changeFormatUser(i)}}</td>
+                    <td class="py-2 px-2 text-center">
+                      <button @click="showPendingModal(i.id, 'edit')" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs">
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3: Wallet Transactions -->
+        <div class="bg-white rounded-lg p-4 shadow">
+          <div class="flex flex-col my-4 gap-2">
+            <span class="text-xl text-gray-800">Wallet Transactions</span>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs text-left text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th scope="col" class="px-2 py-2 text-left">User</th>
+                    <th scope="col" class="px-2 py-2 text-left">Amount</th>
+                    <th scope="col" class="px-2 py-2 text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-if="allwallettransactions.length == 0">
+                    <td colspan="3" class="py-5 px-2 text-center text-gray-500 text-xs">No transactions yet.</td>
+                  </tr>
+                  <tr v-for="i in allwallettransactions.slice(0, 5)" v-bind:key="i.id" class="odd:bg-white even:bg-gray-50 border-b hover:bg-gray-100 cursor-pointer" @click="showWalletModal(i)">
+                    <td class="px-2 py-1 text-xs">{{changeFormatUser(i.user_id)}}</td>
+                    <td class="px-2 py-1 text-xs">{{changeMonetaryFormat(i.input_credit)}}</td>
+                    <td class="px-2 py-1 text-center">
+                      <span :class="changeStatusStyle(i.isApproved)" class="text-white px-2 py-1 rounded text-xs">
+                        {{ changeStatus(i.isApproved) }}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
 
       <p class="text-2xl text-gray-800 my-4">Appointments</p>
