@@ -706,7 +706,7 @@ export default {
     searchName() {
       this.search_nav_list.splice(0);
 
-      if (this.search_nav != "") {
+      if (this.search_nav != "" && this.$store.state.user && this.$store.state.user.ut_id && this.$store.state.user.ut_id.id) {
         axios
           .get(
             process.env.VUE_APP_BASE_URL +
@@ -730,6 +730,9 @@ export default {
                 }
               }
             }
+          })
+          .catch((error) => {
+            console.error('Error searching menu:', error);
           });
       }
     },
