@@ -767,22 +767,18 @@ export default {
       return moment(value).fromNow();
     },
     async logoutAccount() {
+      // Check if user exists before accessing user type
+      if (!this.$store.state.user || !this.$store.state.user.ut_id || !this.$store.state.user.ut_id.id) {
+        // Default logout route if user type is not available
+        this.$router.push('/');
+        return;
+      }
+
       if (this.$store.state.user.ut_id.id == 1) this.$router.push("/admin");
       else if (this.$store.state.user.ut_id.id == 2)
         this.$router.push("/admin");
       else if (this.$store.state.user.ut_id.id == 3)
         this.$router.push("/login");
-      // try {
-      //   const loggedOut = await this.$gAuth.signOut();
-      //   //console.log("isAuthorized", this.Vue3GoogleOauth.isAuthorized);
-      //   //this.user = "";
-      //   if(loggedOut){
-      //     this.$router.push('/akred');
-      //   }
-
-      // } catch (error) {
-      //   console.error(error);
-      // }
     },
   },
 };
