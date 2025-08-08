@@ -99,6 +99,7 @@
     import axios from 'axios';
     import VueTimepicker from 'vue3-timepicker';
     import 'vue3-timepicker/dist/VueTimepicker.css';
+    import SeatMap from '../SeatMap.vue';
 
     export default{
         props: {
