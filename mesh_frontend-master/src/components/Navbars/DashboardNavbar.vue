@@ -669,6 +669,12 @@ export default {
       // return require('../../assets/' + imagePath);
     },
     getListByClick() {
+      // Check if user exists before making API call
+      if (!this.$store.state.user || !this.$store.state.user.ut_id || !this.$store.state.user.ut_id.id) {
+        console.error('User ut_id not found in store, cannot get list');
+        return;
+      }
+
       this.search_nav_list.splice(0);
 
       axios
@@ -692,6 +698,9 @@ export default {
               }
             }
           }
+        })
+        .catch((error) => {
+          console.error('Error fetching menu list:', error);
         });
     },
     searchName() {
