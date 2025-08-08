@@ -628,6 +628,12 @@ export default {
       else return name;
     },
     getNotifications() {
+      // Check if user exists before making API call
+      if (!this.$store.state.user || !this.$store.state.user.id) {
+        console.error('User not found in store, cannot get notifications');
+        return;
+      }
+
       axios
         .get(
           process.env.VUE_APP_BASE_URL +
@@ -642,6 +648,9 @@ export default {
               if (this.allnotifications[i].hasRead == 0) this.cnt_unread++;
             }
           }
+        })
+        .catch((error) => {
+          console.error('Error fetching notifications:', error);
         });
     },
     changePage(link) {
