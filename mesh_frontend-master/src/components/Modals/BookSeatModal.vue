@@ -161,8 +161,26 @@
                 this.selected_package = i.id;
                 this.total_amount = i.rate;
             },
-            selectRoom(i){
-                if(!i.is_reserved) this.selected_room = i.id;
+            selectRoom(data) {
+                this.selected_room = data.id;
+                this.selected_room_data = data;
+            },
+            
+            selectSeatFromMap(seat) {
+                this.selectRoom(seat);
+            },
+            
+            getAreaType(areaDescription) {
+                const description = areaDescription.toLowerCase();
+                if (description.includes('shared')) return 'shared';
+                if (description.includes('private')) return 'private';
+                if (description.includes('exclusive') || description.includes('conference')) return 'exclusive';
+                return 'shared'; // default fallback
+            },
+            
+            isVisualMappingSupported(areaDescription) {
+                const supportedAreas = ['shared', 'private', 'exclusive', 'conference'];
+                return supportedAreas.some(area => areaDescription.toLowerCase().includes(area));
             },
             onFileChange(e){
                 var fileData =  e.target.files[0];
