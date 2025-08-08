@@ -737,6 +737,12 @@ export default {
       }
     },
     getUserInfo() {
+      // Check if user exists before making API call
+      if (!this.$store.state.user || !this.$store.state.user.id) {
+        console.error('User not found in store, cannot get user info');
+        return;
+      }
+
       axios
         .get(
           process.env.VUE_APP_BASE_URL +
@@ -752,6 +758,9 @@ export default {
             this.fullName = res.data.lname + ", " + res.data.fname;
             this.email = res.data.email;
           }
+        })
+        .catch((error) => {
+          console.error('Error fetching user info:', error);
         });
     },
     getFromNow(value) {
