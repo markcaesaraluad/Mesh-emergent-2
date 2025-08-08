@@ -206,7 +206,7 @@ export default{
   data(){
     return{
 
-      search_type : 'login',
+      search_type : 'latest',
 
       alldata : '',
       allpending : '',
