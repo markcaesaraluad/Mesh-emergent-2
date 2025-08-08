@@ -469,6 +469,60 @@ export default{
         });
 
       },
+
+    getAppointments(){
+      // Get pending appointments (status = 0 means pending)
+      axios.get(process.env.VUE_APP_BASE_URL + '/area_rooms_reservation/get_all/1/10')
+      .then((res)=>{
+
+        if(res.status == 200){
+          // Filter only pending appointments (status = 0)
+          this.allappointments = res.data[0].filter(appointment => appointment.status === 0);
+        }
+
+      })
+      .catch((error) => {
+        console.error('Error fetching appointments:', error);
+        // Fallback to empty array if endpoint doesn't exist
+        this.allappointments = [];
+      });
+    },
+
+    async approveAppointment(appointmentId) {
+      try {
+        // Update appointment status to approved (status = 1)
+        const response = await axios.patch(
+          `${process.env.VUE_APP_BASE_URL}/area_rooms_reservation/update/${appointmentId}`,
+          { status: 1 }
+        );
+        
+        if (response.status === 200) {
+          this.showNotification(1, 'Success', 'Appointment approved successfully');
+          this.refreshData(); // Refresh to remove from pending list
+        }
+      } catch (error) {
+        console.error('Error approving appointment:', error);
+        this.showNotification(0, 'Error', 'Failed to approve appointment');
+      }
+    },
+
+    async rejectAppointment(appointmentId) {
+      try {
+        // Update appointment status to rejected (status = 2)  
+        const response = await axios.patch(
+          `${process.env.VUE_APP_BASE_URL}/area_rooms_reservation/update/${appointmentId}`,
+          { status: 2 }
+        );
+        
+        if (response.status === 200) {
+          this.showNotification(1, 'Success', 'Appointment rejected');
+          this.refreshData(); // Refresh to remove from pending list
+        }
+      } catch (error) {
+        console.error('Error rejecting appointment:', error);
+        this.showNotification(0, 'Error', 'Failed to reject appointment');
+      }
+    },
     getSessions(type,name){
 
 
