@@ -55,7 +55,7 @@
                     <div v-if="!isVisualMappingSupported(data.description)" class="mt-4 p-3 bg-yellow-50 rounded-md">
                         <p class="text-sm text-yellow-700 mb-3">Visual map not available for this area. Please select from the list below:</p>
                         <div class="flex-1 grid grid-cols-1 sm:grid-cols-4 gap-2 h-40 sm:h-auto overflow-y-auto scrollbar">
-                            <div v-for="i in allrooms" v-bind:key="i.id" class="border border-gray-300 p-4 rounded-md fadeInSlide cursor-pointer duration-200" :class="selected_room == i.id ? 'bg-biege-700 text-white' : 'bg-white text-gray-800'" @click="selectRoom(i)">
+                            <div v-for="i in allrooms" v-bind:key="i.id" class="border border-gray-300 p-4 rounded-md fadeInSlide cursor-pointer duration-200" :class="selected_room == i.id ? 'bg-biege-700 text-white' : 'bg-white text-gray-800'" @click="!i.is_reserved && selectRoom(i)">
                                 <div class="flex items-center">
                                     <span class="flex-auto">Seat #{{ i.num }}</span>
                                     <span class="flex-none bg-green-600 text-white rounded-sm px-4 py-2 text-sm" v-if="i.is_reserved">Reserved</span>
