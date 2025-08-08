@@ -353,9 +353,17 @@ async registerUser(userData: Partial<UserEntity>): Promise<UserEntity> {
 
     async updateStatus(data:any){
 
-      return await this.i_repository.update(data.id, { 
+      // Prepare update data
+      const updateData = { 
         isApproved: data.isApproved,
-      });
+      };
+
+      // Auto-activate user when approving (requirement from Phase 2)
+      if (data.isApproved == 1) {
+        updateData['status'] = 1; // Automatically set status to active when approved
+      }
+
+      return await this.i_repository.update(data.id, updateData);
   
     }
 
