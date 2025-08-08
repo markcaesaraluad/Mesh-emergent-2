@@ -120,6 +120,7 @@
                 selected_time : '',
                 selected_package : 0,
                 selected_room : 0,
+                selected_room_data : null,
                 attachment_file : '',
                 attachment_name : '',
                 data : {
