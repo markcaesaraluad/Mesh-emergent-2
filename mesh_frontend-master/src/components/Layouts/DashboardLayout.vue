@@ -131,6 +131,13 @@ export default {
       // })
     },
     checkModuleAvailable() {
+      // Check if user exists before accessing user properties
+      if (!this.$store.state.user || !this.$store.state.user.ut_id || !this.$store.state.user.ut_id.id) {
+        console.error('User ut_id not available, redirecting to login');
+        this.$router.push('/');
+        return;
+      }
+
       var data = {
         ut_id: this.$store.state.user.ut_id.id,
         link: this.$route.fullPath,
@@ -141,6 +148,10 @@ export default {
         .then((res) => {
           if (res.data.check_data === 0) this.showDisablePage = true;
           else this.showDisablePage = false;
+        })
+        .catch((error) => {
+          console.error('Error checking module availability:', error);
+          this.showDisablePage = true; // Show access denied on error
         });
     },
     showNotification(type, msg_title, msg) {
