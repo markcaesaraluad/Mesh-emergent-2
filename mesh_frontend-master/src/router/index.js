@@ -165,6 +165,12 @@ const routes = [
         component: () => import('../views/ReportsView.vue'),
         meta: { title: 'Reports', ParentName: 'Home'}
       },
+      {
+        path: '/profile',
+        alias: '/profile',
+        component: () => import('../views/ProfileView.vue'),
+        meta: { title: 'Profile', ParentName: 'Home'}
+      },
     ]
   },
 ]
