@@ -566,6 +566,13 @@ export default{
 
   },
   mounted: function(){
+    // Check if user exists before proceeding
+    if (!this.$store.state.user) {
+      console.error('No user in store state, redirecting to login');
+      this.$router.push('/');
+      return;
+    }
+
     this.getDateTime();
     this.refreshData();
   }
