@@ -565,6 +565,7 @@ export default{
       this.getSessions(null,null);
       this.getTransactions();
       this.getPending();
+      this.getAppointments();
 
     }
 
