@@ -34,7 +34,10 @@
             <div v-for="(i2, index2) in i.children" v-bind:key="i2.id">
               <div v-if="i.show_children == 1">
                 <span :class="[$route.path === i2.um_id.link ? activeClass : inactiveClass]" @click="changePage(i2,index2)" class="flex items-center cursor-pointer">
-                  <img :src="getImgUrl(i2.um_id.profile_pic)" class="m-1 px-2 py-1 w-10 fadeInSlide"  :class="openSidebar ? 'mx-1' : 'mx-auto'">
+                  <!-- Replace broken sub-menu images with text-based icons -->
+                  <div class="m-1 px-2 py-1 w-10 fadeInSlide flex items-center justify-center text-gray-600 font-bold text-sm" :class="openSidebar ? 'mx-1' : 'mx-auto'">
+                    ◦
+                  </div>
                   <span class="pl-4 text-gray-800 text-md flex-auto fadeInSlide" v-if="openSidebar">{{ i2.um_id.name }}</span>
                 </span>
               </div>
