@@ -14,12 +14,16 @@
           <div v-for="(i, index) in alldata" v-bind:key="i.id" class="w-full p-0.5" :class="i.show_children == 1 ? 'border-green-600' : 'bg-none'">
           
           <span class="w-auto flex items-center hover:bg-biege-700 hover:text-white hover:transition-all duration-500 cursor-pointer" :class="[$route.path === i.um_id.link ? parent_activeClass : parent_inactiveClass]" @click="changePage(i,index)">
-            <img :src="getImgUrl(i.um_id.profile_pic)" class="m-1 px-2 py-1 w-10 flex-none fadeInSlide" :class="openSidebar ? 'mx-1' : 'mx-auto'">
+            <!-- Replace broken images with text-based icons -->
+            <div class="m-1 px-2 py-1 w-10 flex-none fadeInSlide flex items-center justify-center text-white font-bold text-lg" :class="openSidebar ? 'mx-1' : 'mx-auto'">
+              •
+            </div>
             <div :class="openSidebar ? 'slideOut w-full z-0' : 'slideIn w-0 z-[-1]'">
               <div class="flex items-center">
                 <span class="flex-auto pl-4 pr-8 tracking-wider fadeInSlide">{{ i.um_id.name }}</span>
-              <img v-if="i.children != null && i.show_children == 0" src="../../assets/menu_dropdown.png" class="flex-none w-8 h-auto mx-2 fadeInSlide"/>
-              <img v-if="i.children != null && i.show_children == 1" src="../../assets/menu_up.png" class="flex-none w-8 h-auto mx-2 fadeInSlide"/>
+              <!-- Replace dropdown images with text symbols -->
+              <span v-if="i.children != null && i.show_children == 0" class="flex-none w-8 h-auto mx-2 fadeInSlide text-white font-bold">▼</span>
+              <span v-if="i.children != null && i.show_children == 1" class="flex-none w-8 h-auto mx-2 fadeInSlide text-white font-bold">▲</span>
               </div>
             </div>
           </span>
