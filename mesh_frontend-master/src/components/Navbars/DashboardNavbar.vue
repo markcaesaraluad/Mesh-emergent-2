@@ -542,6 +542,29 @@ export default {
       this.notifToRead = null;
       this.showIndividualNotif = false;
     },
+
+    async markAllAsRead() {
+      try {
+        // Mark all notifications as read in the local array
+        this.allnotifications.forEach(notification => {
+          notification.hasRead = 1;
+        });
+
+        // Make API call to mark all as read
+        if (this.$store.state.user && this.$store.state.user.id) {
+          await axios.patch(
+            `${process.env.VUE_APP_BASE_URL}/notifications/mark_all_read/${this.$store.state.user.id}`
+          );
+          
+          console.log('All notifications marked as read');
+        }
+      } catch (error) {
+        console.error('Error marking all notifications as read:', error);
+        
+        // If API fails, you might want to revert the local changes
+        // But for now we'll keep the UI updated for better UX
+      }
+    },
     acceptAudio() {
       this.showModal = false;
       this.audioF = new Audio(
