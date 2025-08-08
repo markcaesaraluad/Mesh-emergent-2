@@ -491,12 +491,12 @@ export default{
     async approveAppointment(appointmentId) {
       try {
         // Update appointment status to approved (status = 1)
-        const response = await axios.patch(
-          `${process.env.VUE_APP_BASE_URL}/area_rooms_reservation/update/${appointmentId}`,
-          { status: 1 }
+        const response = await axios.post(
+          `${process.env.VUE_APP_BASE_URL}/area_rooms_reservation/update_appointment`,
+          { id: appointmentId, status: 1 }
         );
         
-        if (response.status === 200) {
+        if (response.status === 201) {
           this.showNotification(1, 'Success', 'Appointment approved successfully');
           this.refreshData(); // Refresh to remove from pending list
         }
@@ -509,12 +509,12 @@ export default{
     async rejectAppointment(appointmentId) {
       try {
         // Update appointment status to rejected (status = 2)  
-        const response = await axios.patch(
-          `${process.env.VUE_APP_BASE_URL}/area_rooms_reservation/update/${appointmentId}`,
-          { status: 2 }
+        const response = await axios.post(
+          `${process.env.VUE_APP_BASE_URL}/area_rooms_reservation/update_appointment`,
+          { id: appointmentId, status: 2 }
         );
         
-        if (response.status === 200) {
+        if (response.status === 201) {
           this.showNotification(1, 'Success', 'Appointment rejected');
           this.refreshData(); // Refresh to remove from pending list
         }
