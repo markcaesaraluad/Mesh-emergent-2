@@ -171,6 +171,12 @@ const routes = [
         component: () => import('../views/ProfileView.vue'),
         meta: { title: 'Profile', ParentName: 'Home'}
       },
+      {
+        path: '/settings',
+        alias: '/settings',
+        component: () => import('../views/SettingsView.vue'),
+        meta: { title: 'Settings', ParentName: 'Home'}
+      },
     ]
   },
 ]
