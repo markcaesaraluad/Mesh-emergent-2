@@ -276,8 +276,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-
+// Remove unused axios import - using it in methods but not importing correctly
 export default {
   name: 'SettingsView',
   data() {
