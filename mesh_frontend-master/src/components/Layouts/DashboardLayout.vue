@@ -92,6 +92,11 @@ export default {
   methods: {
     insertLogs(action, description) {
       //For Logs
+      // Check if user exists before accessing user properties
+      if (!this.$store.state.user || !this.$store.state.user.id) {
+        console.error('User not available for logging');
+        return;
+      }
 
       const today = new Date();
       const date =
